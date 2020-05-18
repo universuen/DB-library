@@ -1,0 +1,26 @@
+<!-- extends表明此页面继承自 base.html 文件 -->
+{% extends "base.html" %}
+
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+    功能页
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+    <br>
+    <br>
+    <h1 align="center">武汉大学图书馆管理系统</h1>
+    <h5 align="center"><small class="text-muted">For development use only.</small></h5>
+    <br>
+    <p align="center">
+    请选择要进行的操作
+    </p>
+    <br>
+    <div align="center">
+    <a class="btn btn-outline-primary" href="../search">查找图书</a>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a class="btn btn-outline-primary" href="../renew">续借图书</a>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a class="btn btn-outline-primary" href="../return_book">归还图书</a>
+{% endblock content %}

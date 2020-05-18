@@ -1,0 +1,48 @@
+<!-- extends表明此页面继承自 base.html 文件 -->
+{% extends "base.html" %}
+
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+    续借图书
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+    <br>
+    <br>
+    <h1 align="center">借书记录如下</h1>
+    <table class="table table-hover">
+  <thead>
+    <tr class="table-active">
+      <th scope="col">书名</th>
+      <th scope="col">图书ID</th>
+      <th scope="col">出版社</th>
+      <th scope="col">发行日期</th>
+      <th scope="col">作者</th>
+      <th scope="col">分类</th>
+      <th scope="col">图书状态</th>
+      <th scope="col">归还日期</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in data%}
+      <tr>
+      {% for attribute in item%}
+      <th>{{ attribute }}</th>
+      {% endfor %}
+      </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<form method="post" action=" ">
+    <div class="container" style="width: 600px">
+      <label>图书ID</label>
+      <input type="text" class="form-control" name="id" placeholder="请输入欲续借图书的ID">
+      <br>
+      <br>
+      <br>
+      {% csrf_token %}
+      <button class="btn btn-outline-primary" type="submit">提交</button>
+    </div>
+    </form>
+{% endblock content %}

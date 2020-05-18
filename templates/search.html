@@ -1,0 +1,42 @@
+<!-- extends表明此页面继承自 base.html 文件 -->
+{% extends "base.html" %}
+
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+    查询页
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+   <br>
+    <h1 align="center">请输入筛选条件</h1>
+    <h5 align="center"><small class="text-muted">所有条件均为选填</small></h5>
+    <h5 align="center"><small class="text-muted">不填写任何条件则返回所有图书</small></h5>
+    <br>
+    <br>
+    <form method="post" action=" ">
+    <div class="container" style="width: 600px">
+      <label>书名</label>
+      <input type="text" class="form-control" name="name" >
+      <label>图书编号</label>
+      <input type="text" class="form-control" name="id" >
+      <label>出版社</label>
+      <input type="text" class="form-control" name="publish_house" >
+      <label>发行日期</label>
+      <input type="date" class="form-control" name="release_date" >
+      <label>作者</label>
+      <input type="text" class="form-control" name="author" >
+      <label>类别</label>
+    <select class="custom-select" name="category" >
+      <option value="">全部</option>
+      <option value="SCIENCE">自然科学</option>
+      <option value="ART">人文关怀</option>
+    </select>
+      <br>
+      <br>
+      <br>
+      {% csrf_token %}
+      <button class="btn btn-outline-primary" type="submit">提交</button>
+    </div>
+    </form>
+{% endblock content %}

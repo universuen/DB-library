@@ -1,0 +1,28 @@
+<!-- extends表明此页面继承自 base.html 文件 -->
+{% extends "base.html" %}
+
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+    登录页
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+   <br>
+    <h1 align="center">用户登录</h1>
+    <br>
+    <br>
+    <form method="post" action=" ">
+    <div class="container" style="width: 600px">
+      <label>用户名</label>
+      <input type="text" class="form-control" name="username" placeholder="请输入用户名">
+      <label>密码</label>
+      <input type="password" class="form-control" name="password" placeholder="请输入密码">
+      <br>
+      <br>
+      <br>
+      {% csrf_token %}
+      <button class="btn btn-outline-primary" type="submit">登录</button>
+    </div>
+    </form>
+{% endblock content %}
