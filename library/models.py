@@ -38,7 +38,7 @@ class Book(models.Model):
         default='自然科学'
     )
 
-    return_date = models.DateField('归还日期', null=True)
+    return_date = models.DateField('归还日期', null=True , blank=True)
 
     STATUS_CHOICES = [
         ('未借出', '未借出'),
@@ -51,6 +51,6 @@ class Book(models.Model):
         default='未借出'
     )
 
-    borrower = models.ForeignKey(User, related_name='books', on_delete=models.SET_NULL, null=True)
+    borrower = models.ForeignKey(User, related_name='books', on_delete=models.SET_NULL, null=True, blank=True)
 
 

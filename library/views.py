@@ -33,8 +33,12 @@ def sign_in(request):
     if request.method == 'POST':
         form = forms.Form(request.POST)
         username = form.data['username']
+        password = form.data['password']
         if User.objects.filter(username=username).count() == 0:
             messages.error(request, '无法在数据库中找到' + username + '的信息')
+            return render(request, 'sign_in.html')
+        if password != User.objects.get(username=username).password:
+            messages.error(request, '密码错误')
             return render(request, 'sign_in.html')
         request.session['username'] = username
         return redirect('library:function')
