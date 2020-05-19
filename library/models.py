@@ -48,7 +48,7 @@ class Book(models.Model):
     status = models.CharField(
         max_length=11,
         choices=STATUS_CHOICES,
-        default='IN_LIBRARY'
+        default='未借出'
     )
 
     borrower = models.ForeignKey(User, related_name='books', on_delete=models.SET_NULL, null=True)
