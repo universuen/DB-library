@@ -37,7 +37,7 @@ def sign_in(request):
             messages.error(request, '无法在数据库中找到' + username + '的信息')
             return render(request, 'sign_in.html')
         request.session['username'] = username
-        return render(request, 'function.html')
+        return redirect('library:function')
     else:
         return render(request, 'sign_in.html')
 
@@ -74,7 +74,7 @@ def search(request):
                 data[i].append(item.status)
                 data[i].append(str(item.return_date))
             request.session['data'] = data
-            return redirect(reverse('library:borrow'))
+            return redirect('library:borrow')
     else:
         return render(request, 'search.html')
 
@@ -100,10 +100,10 @@ def borrow(request):
             book.return_date = return_date.strftime("%Y-%m-%d")
             book.save()
             messages.error(request, '已成功借阅《'+book.name+'》请在' +book.return_date+'之前归还图书')
-            return redirect(reverse('library:function'))
+            return redirect('library:function')
         else:
             messages.error(request, '抱歉，该图书已借出')
-            return redirect(reverse('library:borrow'))
+            return redirect('library:borrow')
     else:
         data = request.session['data']
         return render(request, 'borrow.html', {'data':data})
@@ -119,13 +119,13 @@ def renew(request):
             return redirect(reverse('library:renew'))
         if books.filter(id=id).count() == 0:
             messages.error(request, '您未借阅ID为' + str(id) + '的图书')
-            return redirect(reverse('library:renew'))
+            return redirect('library:renew')
         book = Book.objects.get(id=id)
         return_date = book.return_date
         today = timezone.localdate()
         if book.status == '续借':
             messages.error(request, '您已续借过该图书，无法连续续借')
-            return redirect(reverse('library:renew'))
+            return redirect('library:renew')
         if return_date > today:
             book.status = '续借'
             borrower = User.objects.get(username=request.session['username'])
@@ -134,10 +134,10 @@ def renew(request):
             book.return_date = return_date.strftime("%Y-%m-%d")
             book.save()
             messages.error(request, '已成功续借《'+book.name+'》请在' +book.return_date+'之前归还图书')
-            return redirect(reverse('library:function'))
+            return redirect('library:function')
         else:
             messages.error(request, '抱歉，您未在规定时间内归还该图书，已失去该图书的续借资格')
-            return redirect(reverse('library:renew'))
+            return redirect('library:renew')
     else:
         data = [[] for _ in range(len(books))]
         for i in range(len(books)):
@@ -163,7 +163,7 @@ def return_book(request):
             return redirect(reverse('library:return_book'))
         if books.filter(id=id).count() == 0:
             messages.error(request, '您未借阅ID为' + str(id) + '的图书')
-            return redirect(reverse('library:return_book'))
+            return redirect('library:return_book')
         book = Book.objects.get(id=id)
         messages.error(request, '已成功归还《' + book.name + '》')
         return_date = book.return_date
@@ -174,7 +174,7 @@ def return_book(request):
         book.save()
         if return_date <= today:
             messages.error(request, '您未在规定时间内归还该图书，下不为例')
-        return redirect(reverse('library:function'))
+        return redirect('library:function')
     else:
         data = [[] for _ in range(len(books))]
         for i in range(len(books)):
